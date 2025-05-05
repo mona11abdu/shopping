@@ -6,35 +6,50 @@
     <title>Our Products</title>
     <link rel="stylesheet" href="styles.css">
     <script>
-        // Array to store products in the cart
-        let cart = [];
+        // Initialize the cart from localStorage or as an empty array if nothing is stored
+        function initializeCart() {
+            if (!localStorage.getItem("cart")) {
+                localStorage.setItem("cart", JSON.stringify([]));
+            }
+            updateCart();
+        }
 
         // Function to handle adding product to the cart
         function addToCart(productName, productPrice) {
-            // Add product to the cart array
+            let cart = JSON.parse(localStorage.getItem("cart"));
             cart.push({ name: productName, price: productPrice });
+            localStorage.setItem("cart", JSON.stringify(cart));
             alert(`${productName} has been added to your cart.`);
             updateCart();
         }
 
         // Function to update the cart details (cart count and total price)
         function updateCart() {
+            let cart = JSON.parse(localStorage.getItem("cart"));
             let cartCount = document.getElementById("cart-count");
             let cartTotal = document.getElementById("cart-total");
             cartCount.innerText = cart.length;
+
             let total = cart.reduce((acc, product) => acc + product.price, 0);
             cartTotal.innerText = `$${total.toFixed(2)}`;
         }
 
         // Function to checkout (simple for now)
         function checkout() {
+            let cart = JSON.parse(localStorage.getItem("cart"));
             if (cart.length === 0) {
                 alert("Your cart is empty.");
                 return;
             }
+
             let total = cart.reduce((acc, product) => acc + product.price, 0);
             alert(`Your total is $${total.toFixed(2)}. Proceeding to checkout.`);
-            // You could redirect to a checkout page here
+            // You can redirect to a real checkout page here or integrate payment systems
+        }
+
+        // Call the initializeCart function when the page loads
+        window.onload = function() {
+            initializeCart();
         }
     </script>
 </head>
@@ -55,18 +70,24 @@
     <section class="products">
         <h2>Shop Our Collection</h2>
         <div class="product-item">
-            <img src="product1.jpg" alt="Product 1">
-            <p>Stylish Dress</p>
+            <img src="product1.jpg" alt="Stylish Dress">
+            <h3>Stylish Dress</h3>
             <p>$45.00</p>
             <button onclick="addToCart('Stylish Dress', 45.00)">Add to Cart</button>
         </div>
         <div class="product-item">
-            <img src="product2.jpg" alt="Product 2">
-            <p>Elegant Handbag</p>
+            <img src="product2.jpg" alt="Elegant Handbag">
+            <h3>Elegant Handbag</h3>
             <p>$30.00</p>
             <button onclick="addToCart('Elegant Handbag', 30.00)">Add to Cart</button>
         </div>
-        <!-- Add more products here -->
+        <div class="product-item">
+            <img src="product3.jpg" alt="Trendy Sneakers">
+            <h3>Trendy Sneakers</h3>
+            <p>$60.00</p>
+            <button onclick="addToCart('Trendy Sneakers', 60.00)">Add to Cart</button>
+        </div>
+        <!-- More products can go here -->
     </section>
 
     <section class="cart">
@@ -81,4 +102,3 @@
     </footer>
 </body>
 </html>
-
