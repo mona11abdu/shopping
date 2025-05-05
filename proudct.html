@@ -46,4 +46,59 @@
             alert(`Your total is $${total.toFixed(2)}. Proceeding to checkout.`);
         }
 
-        // Call the initi
+        // Call the initializeCart function when the page loads
+        window.onload = function() {
+            initializeCart();
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="team.html">Our Team</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="location.html">Location</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="products">
+        <h2>Shop Our Collection</h2>
+        
+        <!-- Product: Stylish Dress -->
+        <div class="product-item">
+            <img src="product-dress.jpg" alt="Stylish Dress">
+            <h3>Stylish Dress</h3>
+            <p>A fashionable dress perfect for any occasion, designed for comfort and style.</p>
+            <p><strong>$45.00</strong></p>
+            <button onclick="addToCart('Stylish Dress', 45.00)">Add to Cart</button>
+        </div>
+
+        <!-- Example of another product -->
+        <div class="product-item">
+            <img src="product2.jpg" alt="Elegant Handbag">
+            <h3>Elegant Handbag</h3>
+            <p>Chic and modern handbag for the stylish woman.</p>
+            <p><strong>$30.00</strong></p>
+            <button onclick="addToCart('Elegant Handbag', 30.00)">Add to Cart</button>
+        </div>
+        
+        <!-- Add more products here -->
+    </section>
+
+    <section class="cart">
+        <h3>Shopping Cart</h3>
+        <p>Items in Cart: <span id="cart-count">0</span></p>
+        <p>Total: <span id="cart-total">$0.00</span></p>
+        <button onclick="checkout()">Proceed to Checkout</button>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Women’s Shopping. All rights reserved.</p>
+    </footer>
+</body>
+</html>
