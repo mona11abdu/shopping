@@ -6,7 +6,16 @@
     <title>Our Products</title>
     <link rel="stylesheet" href="styles.css">
     <script>
-        // Function to initialize the cart from localStorage
+        // Sample product data with categories
+        const products = [
+            { id: 1, name: "Stylish Dress", price: 45.00, category: "Dresses", image: "product-dress.jpg", description: "A fashionable dress perfect for any occasion." },
+            { id: 2, name: "Elegant Handbag", price: 30.00, category: "Handbags", image: "product2.jpg", description: "Chic and modern handbag for the stylish woman." },
+            { id: 3, name: "Trendy Sneakers", price: 60.00, category: "Shoes", image: "product3.jpg", description: "Comfortable and stylish sneakers for everyday wear." },
+            { id: 4, name: "Casual Dress", price: 50.00, category: "Dresses", image: "product4.jpg", description: "A comfortable casual dress for a relaxed day out." },
+            { id: 5, name: "Luxury Handbag", price: 120.00, category: "Handbags", image: "product5.jpg", description: "A luxury handbag for elegant outings." },
+        ];
+
+        // Initialize the cart from localStorage
         function initializeCart() {
             if (!localStorage.getItem("cart")) {
                 localStorage.setItem("cart", JSON.stringify([]));
@@ -14,7 +23,7 @@
             updateCart();
         }
 
-        // Function to handle adding product to the cart
+        // Add product to the cart
         function addToCart(productName, productPrice) {
             let cart = JSON.parse(localStorage.getItem("cart"));
             cart.push({ name: productName, price: productPrice });
@@ -23,7 +32,7 @@
             updateCart();
         }
 
-        // Function to update the cart details (cart count and total price)
+        // Update the cart count and total
         function updateCart() {
             let cart = JSON.parse(localStorage.getItem("cart"));
             let cartCount = document.getElementById("cart-count");
@@ -34,22 +43,34 @@
             cartTotal.innerText = `$${total.toFixed(2)}`;
         }
 
-        // Function to checkout (simple for now)
-        function checkout() {
-            let cart = JSON.parse(localStorage.getItem("cart"));
-            if (cart.length === 0) {
-                alert("Your cart is empty.");
-                return;
-            }
-
-            let total = cart.reduce((acc, product) => acc + product.price, 0);
-            alert(`Your total is $${total.toFixed(2)}. Proceeding to checkout.`);
+        // Filter products by category
+        function filterProducts(category) {
+            let filteredProducts = category === "All" ? products : products.filter(product => product.category === category);
+            displayProducts(filteredProducts);
         }
 
-        // Call the initializeCart function when the page loads
+        // Display products based on the filtered category
+        function displayProducts(filteredProducts) {
+            let productContainer = document.getElementById("product-list");
+            productContainer.innerHTML = "";
+            filteredProducts.forEach(product => {
+                productContainer.innerHTML += `
+                    <div class="product-item">
+                        <img src="${product.image}" alt="${product.name}">
+                        <h3>${product.name}</h3>
+                        <p>${product.description}</p>
+                        <p><strong>$${product.price.toFixed(2)}</strong></p>
+                        <button onclick="addToCart('${product.name}', ${product.price})">Add to Cart</button>
+                    </div>
+                `;
+            });
+        }
+
+        // Call initializeCart when the page loads
         window.onload = function() {
             initializeCart();
-        }
+            filterProducts("All"); // Show all products by default
+        };
     </script>
 </head>
 <body>
@@ -66,28 +87,16 @@
         </nav>
     </header>
 
-    <section class="products">
-        <h2>Shop Our Collection</h2>
-        
-        <!-- Product: Stylish Dress -->
-        <div class="product-item">
-            <img src="product-dress.jpg" alt="Stylish Dress">
-            <h3>Stylish Dress</h3>
-            <p>A fashionable dress perfect for any occasion, designed for comfort and style.</p>
-            <p><strong>$45.00</strong></p>
-            <button onclick="addToCart('Stylish Dress', 45.00)">Add to Cart</button>
-        </div>
+    <section class="categories">
+        <h2>Product Categories</h2>
+        <button onclick="filterProducts('All')">All Products</button>
+        <button onclick="filterProducts('Dresses')">Dresses</button>
+        <button onclick="filterProducts('Handbags')">Handbags</button>
+        <button onclick="filterProducts('Shoes')">Shoes</button>
+    </section>
 
-        <!-- Example of another product -->
-        <div class="product-item">
-            <img src="product2.jpg" alt="Elegant Handbag">
-            <h3>Elegant Handbag</h3>
-            <p>Chic and modern handbag for the stylish woman.</p>
-            <p><strong>$30.00</strong></p>
-            <button onclick="addToCart('Elegant Handbag', 30.00)">Add to Cart</button>
-        </div>
-        
-        <!-- Add more products here -->
+    <section class="products" id="product-list">
+        <!-- Products will be dynamically added here -->
     </section>
 
     <section class="cart">
