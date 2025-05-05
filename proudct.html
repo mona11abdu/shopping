@@ -6,7 +6,7 @@
     <title>Our Products</title>
     <link rel="stylesheet" href="styles.css">
     <script>
-        // Initialize the cart from localStorage or as an empty array if nothing is stored
+        // Function to initialize the cart from localStorage
         function initializeCart() {
             if (!localStorage.getItem("cart")) {
                 localStorage.setItem("cart", JSON.stringify([]));
@@ -44,61 +44,6 @@
 
             let total = cart.reduce((acc, product) => acc + product.price, 0);
             alert(`Your total is $${total.toFixed(2)}. Proceeding to checkout.`);
-            // You can redirect to a real checkout page here or integrate payment systems
         }
 
-        // Call the initializeCart function when the page loads
-        window.onload = function() {
-            initializeCart();
-        }
-    </script>
-</head>
-<body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About Us</a></li>
-                <li><a href="team.html">Our Team</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li><a href="location.html">Location</a></li>
-                <li><a href="contact.html">Contact Us</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <section class="products">
-        <h2>Shop Our Collection</h2>
-        <div class="product-item">
-            <img src="product1.jpg" alt="Stylish Dress">
-            <h3>Stylish Dress</h3>
-            <p>$45.00</p>
-            <button onclick="addToCart('Stylish Dress', 45.00)">Add to Cart</button>
-        </div>
-        <div class="product-item">
-            <img src="product2.jpg" alt="Elegant Handbag">
-            <h3>Elegant Handbag</h3>
-            <p>$30.00</p>
-            <button onclick="addToCart('Elegant Handbag', 30.00)">Add to Cart</button>
-        </div>
-        <div class="product-item">
-            <img src="product3.jpg" alt="Trendy Sneakers">
-            <h3>Trendy Sneakers</h3>
-            <p>$60.00</p>
-            <button onclick="addToCart('Trendy Sneakers', 60.00)">Add to Cart</button>
-        </div>
-        <!-- More products can go here -->
-    </section>
-
-    <section class="cart">
-        <h3>Shopping Cart</h3>
-        <p>Items in Cart: <span id="cart-count">0</span></p>
-        <p>Total: <span id="cart-total">$0.00</span></p>
-        <button onclick="checkout()">Proceed to Checkout</button>
-    </section>
-
-    <footer>
-        <p>&copy; 2025 Women’s Shopping. All rights reserved.</p>
-    </footer>
-</body>
-</html>
+        // Call the initi
